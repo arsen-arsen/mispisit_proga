@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block content %}
+  <h1>Edit Entry</h1>
+  <form method="POST" action="{{ url_for('update', user_id=entry.user_id) }}">
+    <label for="req_data">Request Data:</label>
+    <input type="text" name="req_data" value="{{ entry.req_data }}"><br>
+    <label for="report_info">Report Info:</label>
+    <input type="text" name="report_info" value="{{ entry.report_info }}"><br>
+    <label for="other_info">Other Info:</label>
+    <input type="text" name="other_info" value="{{ entry.other_info }}"><br>
+    <input type="submit" value="Update">
+  </form>
+{% endblock %}
