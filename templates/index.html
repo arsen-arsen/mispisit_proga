@@ -1,24 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title></title>
- <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
-<style>
-h1 {text-align: center;}
-p {text-align: center;}
-div {text-align: center;}
-</style>
+    <title>Панель управления базой данных ИС ОФАП</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<h1>Arsenii's Database</h1></p>
-<p align="center">
- <a href=users >
-  <button class=grey style="height:75px;width:150px"><b>Check out the DB!</b></button>
- </a>
-</p>
-<div class = "develop">
- <img src="https://media.tenor.com/1z5Kf7sE8OQAAAAd/background.gif">
-</div>
-</body>
+    <h1>Панель управления базой данных ИС ОФАП</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Реквизиты рег. формы ИКАП</th>
+            <th>Информация для отчётов</th>
+            <th>Прочее</th>
+            <th></th>
+        </tr>
+        {% for entry in data %}
+        <tr>
+            <td>{{ entry.user_id }}</td>
+            <td>{{ entry.req_data }}</td>
+            <td>{{ entry.report_info }}</td>
+            <td>{{ entry.other_info }}</td>
+            <td><a href="{{ url_for('edit', user_id=entry.user_id) }}" class="button">Редактировать</a> <a href="{{ url_for('delete', user_id=entry.user_id) }}" class="button">Удалить</a></td>
+        </tr>
+        {% endfor %}
+    </table>
 
+    <br>
+
+    <!-- Add new entry -->
+			<tr id="new-entry">
+				<form action="/submit" method="POST">
+					<td></td><!-- ID will be auto-generated -->
+					<td><input type="text" name="req_data" placeholder="Реквизиты"></td>
+					<td><input type="text" name="report_info" placeholder="Инф. для отчета"></td>
+					<td><input type="text" name="other_info" placeholder="Прочее"></td>
+					<td><button type="submit">Добавить новую заявку</button></td><!-- Submit button -->
+				</form>
+			</tr>
+
+    <br>
+
+    <!-- Search in the database table -->
+			<tr id="search_query">
+				<form action="" method="GET">
+					<td></td><!-- ID will be auto-generated -->
+					<td><input type="text" name="search_query" placeholder="Поиск"></td><!-- Search input field -->
+					<td></td><!-- Empty column for alignment -->
+					<td></td><!-- Empty column for alignment -->
+					<td><button type="submit">Поиск</button></td><!-- Submit button -->
+				</form>
+			</tr>
+
+</body>
 </html>
